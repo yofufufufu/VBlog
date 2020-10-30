@@ -23,9 +23,9 @@ import java.util.List;
 @Service
 @Transactional
 public class UserService implements UserDetailsService {
-    @Autowired
+    @Autowired(required=false)
     UserMapper userMapper;
-    @Autowired
+    @Autowired(required=false)
     RolesMapper rolesMapper;
     @Autowired
     PasswordEncoder passwordEncoder;
