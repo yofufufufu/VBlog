@@ -53,6 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 httpServletResponse.setContentType("application/json;charset=utf-8");
                 // 获得输出流，out对象用于输出字符流数据
                 PrintWriter out = httpServletResponse.getWriter();
+                //JSON格式数据{"status":"success","msg":"登录成功"}，内容影响能否成功登陆，暂时不知道为什么
                 out.write("{\"status\":\"success\",\"msg\":\"登录成功\"}");
                 out.flush();
                 out.close();
@@ -67,16 +68,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         out.flush();
                         out.close();
                     }
-                }).loginProcessingUrl("/login")
-                .usernameParameter("username").passwordParameter("password").permitAll()
-                .and().logout().permitAll().and().csrf().disable().exceptionHandling().accessDeniedHandler(getAccessDeniedHandler());
+                })
+                .loginProcessingUrl("/login").usernameParameter("username").passwordParameter("password").permitAll()
+                .and().logout().permitAll()
+                // 关闭csrf保护
+                .and().csrf().disable().exceptionHandling().accessDeniedHandler(getAccessDeniedHandler());
     }
 
+    // 配置忽略权限的静态web资源
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/blogimg/**","/index.html","/static/**");
     }
 
+    // AuthenticationAccessDeniedHandler类是AccessDeniedHandler接口实现类
     @Bean
     AccessDeniedHandler getAccessDeniedHandler() {
         return new AuthenticationAccessDeniedHandler();
