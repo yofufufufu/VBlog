@@ -32,21 +32,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // 自定义的用户详情查询服务
         auth.userDetailsService(userService);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                //这句一定要放在前面，才能保证登录即可访问
                 .antMatchers("/admin/category/all").authenticated()
                 // /admin/**的URL都需要有超级管理员角色，如果使用.hasAuthority()方法来配置，需要在参数中加上ROLE_,如下.hasAuthority("ROLE_超级管理员")
                 .antMatchers("/admin/**","/reg").hasRole("超级管理员")
                 // 其他的路径都是登录后即可访问
                 .anyRequest().authenticated()
+                // 这里创建了一个匿名内部类实现AuthenticationSuccessHandler接口
                 .and().formLogin().loginPage("/login_page").successHandler(new AuthenticationSuccessHandler() {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                // 设置向浏览器返回的内容形式、字符集
                 httpServletResponse.setContentType("application/json;charset=utf-8");
+                // 获得输出流，out对象用于输出字符流数据
                 PrintWriter out = httpServletResponse.getWriter();
                 out.write("{\"status\":\"success\",\"msg\":\"登录成功\"}");
                 out.flush();

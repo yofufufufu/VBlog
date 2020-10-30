@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Created by sang on 2017/12/17.
  */
+// 实现UserDetails接口
 public class User implements UserDetails {
     private Long id;
     private String username;

@@ -30,8 +30,10 @@ public class UserService implements UserDetailsService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    // loadUserByUsername返回UserDetails接口
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        // User类时UserDetails接口的实现类
         User user = userMapper.loadUserByUsername(s);
         if (user == null) {
             //避免返回null，这里返回一个不含有任何值的User对象，在后期的密码比对过程中一样会验证失败
