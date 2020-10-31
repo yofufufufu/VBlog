@@ -2,29 +2,24 @@ package org.sang.service;
 
 import org.sang.bean.Role;
 import org.sang.bean.User;
-import org.sang.config.MyPasswordEncoder;
 import org.sang.mapper.RolesMapper;
 import org.sang.mapper.UserMapper;
 import org.sang.utils.Util;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.DigestUtils;
 
 import java.util.List;
 
-/**
- * Created by sang on 2017/12/17.
- */
 @Service
 @Transactional
 public class UserService implements UserDetailsService {
     final UserMapper userMapper;
     final RolesMapper rolesMapper;
+    // MyPasswordEncoder类是passwordEncoder接口的实现类，注入MyPasswordEncoder实例对象
     final PasswordEncoder passwordEncoder;
 
     public UserService(UserMapper userMapper, RolesMapper rolesMapper, PasswordEncoder passwordEncoder) {
