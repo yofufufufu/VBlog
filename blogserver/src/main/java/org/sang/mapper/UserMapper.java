@@ -4,12 +4,14 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.sang.bean.Role;
 import org.sang.bean.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Created by sang on 2017/12/17.
  */
+@Repository
 @Mapper
 public interface UserMapper {
 

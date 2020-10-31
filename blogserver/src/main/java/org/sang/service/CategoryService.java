@@ -15,8 +15,11 @@ import java.util.List;
 @Service
 @Transactional
 public class CategoryService {
-    @Autowired
-    CategoryMapper categoryMapper;
+    final CategoryMapper categoryMapper;
+
+    public CategoryService(CategoryMapper categoryMapper) {
+        this.categoryMapper = categoryMapper;
+    }
 
     public List<Category> getAllCategories() {
         return categoryMapper.getAllCategories();

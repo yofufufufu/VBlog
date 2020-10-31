@@ -23,12 +23,15 @@ import java.util.List;
 @Service
 @Transactional
 public class UserService implements UserDetailsService {
-    @Autowired(required=false)
-    UserMapper userMapper;
-    @Autowired(required=false)
-    RolesMapper rolesMapper;
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    final UserMapper userMapper;
+    final RolesMapper rolesMapper;
+    final PasswordEncoder passwordEncoder;
+
+    public UserService(UserMapper userMapper, RolesMapper rolesMapper, PasswordEncoder passwordEncoder) {
+        this.userMapper = userMapper;
+        this.rolesMapper = rolesMapper;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     // loadUserByUsername返回UserDetails接口
     @Override

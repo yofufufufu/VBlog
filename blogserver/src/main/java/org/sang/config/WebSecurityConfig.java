@@ -27,8 +27,11 @@ import java.io.PrintWriter;
  */
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    UserService userService;
+    final UserService userService;
+
+    public WebSecurityConfig(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

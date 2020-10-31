@@ -18,10 +18,13 @@ import java.util.List;
 @Service
 @Transactional
 public class ArticleService {
-    @Autowired
-    ArticleMapper articleMapper;
-    @Autowired
-    TagsMapper tagsMapper;
+    final ArticleMapper articleMapper;
+    final TagsMapper tagsMapper;
+
+    public ArticleService(ArticleMapper articleMapper, TagsMapper tagsMapper) {
+        this.articleMapper = articleMapper;
+        this.tagsMapper = tagsMapper;
+    }
 
     public int addNewArticle(Article article) {
         //处理文章摘要
