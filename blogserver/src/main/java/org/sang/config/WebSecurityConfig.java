@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 .loginProcessingUrl("/login").usernameParameter("username").passwordParameter("password").permitAll()
                 .and().logout().permitAll()
-                // 关闭csrf保护
+                // 关闭csrf保护，并设置exceptionHandling().accessDeniedHandler()完成页面拒绝访问时的处理
                 .and().csrf().disable().exceptionHandling().accessDeniedHandler(getAccessDeniedHandler());
     }
 
