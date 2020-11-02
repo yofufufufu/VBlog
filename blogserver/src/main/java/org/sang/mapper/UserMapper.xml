@@ -16,15 +16,21 @@
     <select id="getUserByNickname" resultMap="BaseResultMap">
         SELECT u.*,r.`id` AS rid,r.`name` AS rname FROM user u,roles r,roles_user ru WHERE u.`id`=ru.`uid` AND
         r.`id`=ru.`rid` AND u.`id` NOT IN(SELECT u.`id` FROM user u,roles_user ru WHERE u.`id`=ru.`uid` AND ru.`rid`=1)
+        --相当于switch...case...default
         <choose>
             <when test="nickname!=null and nickname!=''">
+                --动态SQL拼接
+                --用concat拼接前后通配符和入参nickname
                 and u.nickname like concat('%',#{nickname},'%') ORDER BY u.`id`
             </when>
             <otherwise>
+                --如果nickname为空或者空字符串，限定从头开始20条，按user.id(默认升序)排列
                 ORDER BY u.`id` limit 20
             </otherwise>
         </choose>
     </select>
+    <!--roles_user作为中间表，查询出的列名中有相同时，使用列别名(否则有一列会被覆盖)，多表联结查询使用表别名-->
+    <!-- `反单引号是用来引在表名、字段名外面的，当表名、字段名不是保留单词、不是英文以外的其它语言、符合用户自定义标识符的规范，可以省略。-->
     <select id="getUserById" resultMap="BaseResultMap">
         SELECT u.*,r.`id` AS rid,r.`name` AS rname FROM user u,roles r,roles_user ru WHERE u.`id`=ru.`uid` AND
         r.`id`=ru.`rid` AND u.`id`=#{id}
@@ -39,7 +45,7 @@
         <result column="email" property="email"/>
         <result column="userface" property="userface"/>
         <result column="regTime" property="regTime"/>
-    <!--嵌套结果-->
+    <!--嵌套结果, Role类有id和name两个属性，column的值要和列别名对应-->
         <collection property="roles" ofType="org.sang.bean.Role">
             <id column="rid" property="id"/>
             <result column="rname" property="name"/>

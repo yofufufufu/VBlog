@@ -29,7 +29,7 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // loadUserByUsername返回UserDetails接口
+    // loadUserByUsername要求返回UserDetails接口
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         // User类时UserDetails接口的实现类

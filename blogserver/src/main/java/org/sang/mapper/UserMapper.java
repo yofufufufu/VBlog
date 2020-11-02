@@ -16,13 +16,15 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    // 传递多个参数时需要使用@Param注解
+
     User loadUserByUsername(@Param("username") String username);
 
     long reg(User user);
 
+    // 传递多个参数时需要使用@Param注解
     int updateUserEmail(@Param("email") String email, @Param("id") Long id);
 
+    // 如果在动态SQL中用到了参数作为判断条件，那也一定要加@Param注解
     List<User> getUserByNickname(@Param("nickname") String nickname);
 
     List<Role> getAllRole();
@@ -33,6 +35,7 @@ public interface UserMapper {
 
     int deleteUserRolesByUid(Long id);
 
+    // 传入list，array，collection类型都要加@param
     int setUserRoles(@Param("rids") Long[] rids, @Param("id") Long id);
 
     User getUserById(@Param("id") Long id);
