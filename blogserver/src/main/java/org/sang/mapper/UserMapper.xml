@@ -16,15 +16,15 @@
     <select id="getUserByNickname" resultMap="BaseResultMap">
         SELECT u.*,r.`id` AS rid,r.`name` AS rname FROM user u,roles r,roles_user ru WHERE u.`id`=ru.`uid` AND
         r.`id`=ru.`rid` AND u.`id` NOT IN(SELECT u.`id` FROM user u,roles_user ru WHERE u.`id`=ru.`uid` AND ru.`rid`=1)
-        --相当于switch...case...default
+        <!--相当于switch...case...default-->
         <choose>
             <when test="nickname!=null and nickname!=''">
-                --动态SQL拼接
-                --用concat拼接前后通配符和入参nickname
+                <!--动态SQL拼接-->
+                <!--用concat拼接前后通配符和入参nickname-->
                 and u.nickname like concat('%',#{nickname},'%') ORDER BY u.`id`
             </when>
+            <!--如果nickname为空或者空字符串(就是搜索栏里啥也不输入点搜索)，限定从头开始20条，按user.id(默认升序)排列-->
             <otherwise>
-                --如果nickname为空或者空字符串，限定从头开始20条，按user.id(默认升序)排列
                 ORDER BY u.`id` limit 20
             </otherwise>
         </choose>
