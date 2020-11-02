@@ -22,6 +22,7 @@ public class UserService implements UserDetailsService {
     // MyPasswordEncoder类是passwordEncoder接口的实现类，注入MyPasswordEncoder实例对象
     final PasswordEncoder passwordEncoder;
 
+    // 构造方法注入
     public UserService(UserMapper userMapper, RolesMapper rolesMapper, PasswordEncoder passwordEncoder) {
         this.userMapper = userMapper;
         this.rolesMapper = rolesMapper;

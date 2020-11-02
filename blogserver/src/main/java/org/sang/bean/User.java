@@ -19,7 +19,7 @@ public class User implements UserDetails {
     private String password;
     private String nickname;
     private boolean enabled;
-    private List<Role> roles;
+    private List<Role> roles; // 角色集合，一个用户可以有多个角色，一个角色可以属于多个用户，属于多对多映射
     private String email;
     private String userface;
     private Timestamp regTime;
