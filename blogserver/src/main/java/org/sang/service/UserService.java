@@ -53,17 +53,22 @@ public class UserService implements UserDetailsService {
      */
     public int reg(User user) {
         User loadUserByUsername = userMapper.loadUserByUsername(user.getUsername());
+        //loadUserByUsername != null表明想注册的用户名已经存在(被占用),返回1
         if (loadUserByUsername != null) {
             return 1;
         }
         //插入用户,插入之前先对密码进行加密
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setEnabled(true);//用户可用
+        //数据库insert操作,返回值为成功插入数据条数
         long result = userMapper.reg(user);
-        //配置用户的角色，默认都是普通用户
+        //配置用户的角色，默认都只是普通用户,2是数据库roles表中普通用户的id
         String[] roles = new String[]{"2"};
+        //user.getId()可以获得插入的数据在数据库中生成的主键，在UserMapper.xml<insert>中通过KeyProperty等配置
         int i = rolesMapper.addRoles(roles, user.getId());
+        //result==1表明插入用户成功,i == roles.length表明设置角色成功
         boolean b = i == roles.length && result == 1;
+        //注册成功返回0,失败返回2
         if (b) {
             return 0;
         } else {

@@ -6,6 +6,9 @@
     <select id="loadUserByUsername" resultType="org.sang.bean.User">
         SELECT * FROM user WHERE username=#{username}
     </select>
+    <!--注册，插入一条新数据-->
+    <!--KeyProperty表明插入对象的哪个属性接收返回的生成主键的值,useGeneratedKeys表示支持获取自动递增的主键-->
+    <!--这句sql语句应该有问题,insert into不和SET搭配，和VALUES搭配-->
     <insert id="reg" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user set username=#{username},password=#{password},nickname=#{nickname}
     </insert>

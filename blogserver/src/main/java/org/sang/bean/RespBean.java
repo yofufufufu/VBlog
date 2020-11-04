@@ -1,8 +1,6 @@
 package org.sang.bean;
 
-/**
- * Created by sang on 2017/12/17.
- */
+// 统一风格的提示信息
 public class RespBean {
     private String status;
     private String msg;

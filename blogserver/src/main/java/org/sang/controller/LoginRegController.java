@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by sang on 2017/12/17.
  */
 @RestController
+//登录和注册
 public class LoginRegController {
 
     @Autowired
@@ -39,6 +40,7 @@ public class LoginRegController {
         return new RespBean("error", "尚未登录，请登录!");
     }
 
+    // 注册，使用post方法
     @PostMapping("/reg")
     public RespBean reg(User user) {
         int result = userService.reg(user);

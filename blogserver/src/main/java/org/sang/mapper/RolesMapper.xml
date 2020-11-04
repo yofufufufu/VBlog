@@ -4,8 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.sang.mapper.RolesMapper">
     <insert id="addRoles">
+        <!--插入中间表-->
         INSERT INTO roles_user VALUES
+        <!--foreach循环遍历集合-->
         <foreach collection="roles" item="role" separator=",">
+            <!--主键值为null为啥???-->
             (null,#{role},#{uid})
         </foreach>
     </insert>
