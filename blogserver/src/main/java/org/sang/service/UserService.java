@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+//事务注解
 @Transactional
 public class UserService implements UserDetailsService {
     final UserMapper userMapper;
