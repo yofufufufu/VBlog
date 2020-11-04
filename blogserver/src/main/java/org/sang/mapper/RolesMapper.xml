@@ -5,13 +5,16 @@
 <mapper namespace="org.sang.mapper.RolesMapper">
     <insert id="addRoles">
         <!--插入中间表-->
+        <!--INSERT INTO roles_user(rid,uid)-->
         INSERT INTO roles_user VALUES
         <!--foreach循环遍历集合-->
         <foreach collection="roles" item="role" separator=",">
-            <!--主键值为null为啥???-->
+            <!--主键值为null为啥,你不想自己设主键你指定两列名插入不就好了-->
+            <!--(#{role},#{uid})-->
             (null,#{role},#{uid})
         </foreach>
     </insert>
+    <!--利用中间表-->
     <select id="getRolesByUid" parameterType="long" resultType="org.sang.bean.Role">
         SELECT r.* FROM roles r,roles_user ru WHERE r.`id`=ru.`rid` AND ru.`uid`=#{uid}
     </select>
