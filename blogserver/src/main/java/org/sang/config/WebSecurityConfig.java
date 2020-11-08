@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 自定义的用户详情查询服务
+        // 自定义的用户详情查询服务,返回UserDetails接口(否则使用默认的)
         auth.userDetailsService(userService);
     }
 
