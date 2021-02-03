@@ -10,11 +10,9 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.util.DigestUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //这句一定要放在前面，才能保证登录即可访问
                 .antMatchers("/admin/category/all").authenticated()
                 // /admin/**的URL都需要有超级管理员角色，如果使用.hasAuthority()方法来配置，需要在参数中加上ROLE_,如下.hasAuthority("ROLE_超级管理员")
-                .antMatchers("/admin/**","/reg").hasRole("超级管理员")
+                .antMatchers("/admin/**", "/reg").hasRole("超级管理员")
                 // 其他的路径都是登录后即可访问
                 .anyRequest().authenticated()
                 // 这里创建了一个匿名内部类实现AuthenticationSuccessHandler接口
@@ -81,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     // 配置忽略权限的静态web资源
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/blogimg/**","/index.html","/static/**");
+        web.ignoring().antMatchers("/blogimg/**", "/index.html", "/static/**");
     }
 
     // AuthenticationAccessDeniedHandler类是AccessDeniedHandler接口实现类
@@ -89,4 +87,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     AccessDeniedHandler getAccessDeniedHandler() {
         return new AuthenticationAccessDeniedHandler();
     }
+
 }
